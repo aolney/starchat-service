@@ -46,7 +46,9 @@ app = Flask(__name__)
 load_model()
 
 def get_bot_response(user_message):
-    return do_inference(user_message)
+    raw_bot_response = do_inference(user_message)
+    #remove prefix so only the bot response is returned
+    return raw_bot_response.partition("<|assistant|>")[2]
 
 #=======================================================================================
 # Instructions/help
@@ -57,9 +59,9 @@ def api_help():
 # get_bot_response(user_message)
 @app.route('/api/getBotResponse', methods=['GET', 'POST'])
 def api_getBotResponse():
-content = request.get_json()
-result = get_bot_response( content['user_message'] )
-return jsonify(result)
+    content = request.get_json()
+    result = get_bot_response( content['user_message'] )
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
