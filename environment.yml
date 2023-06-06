@@ -1,0 +1,17 @@
+name: starchat
+channels:
+  - conda-forge
+dependencies:
+  - python=3.9
+  - tqdm==4.65.0
+  - transformers==4.28.1
+  - datasets==2.11.0
+  - huggingface_hub==0.13.4
+  - accelerate==0.18.0
+  - ca-certificates
+  - openssl
+  - flask
+  - gunicorn
+  - certifi
+  - pylint
+  - scipy
