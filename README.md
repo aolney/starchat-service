@@ -16,8 +16,7 @@ followed by:
 conda activate starchat
 ```
 
-You will likely want to install `bitsandbytes`, e.g. `mamba install bitsandbytes`.
-This is not included in the env because I had to build it from source.
+If you have problems with `bitsandbytes`, you may need to build it from source.
 
 ## Server
 
@@ -34,7 +33,7 @@ The Dockerfile in specifies a build using [Gunicorn](https://flask.palletsprojec
 You can build a docker image with e.g.:
 
 ```
-docker build --tag starchat-service:1.0 .
+docker buildx build --tag starchat-service:1.0 .
 ```
 
 and run with, e.g.:
