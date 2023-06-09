@@ -1,5 +1,7 @@
 name: starchat
 channels:
+  - pytorch
+  - nvidia
   - conda-forge
 dependencies:
   - python=3.9
@@ -14,5 +16,11 @@ dependencies:
   - gunicorn
   - certifi
   - pylint
+  - pip
   - scipy
-  - bitsandbytes
+  - pytorch
+  - pytorch-cuda=11.8
+  - torchvision
+  - torchaudio
+  - pip:
+    - bitsandbytes

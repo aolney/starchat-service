@@ -1,3 +1,4 @@
 bitsandbytes/
 __pycache__/
 caddy.log
+Caddyfile.json
