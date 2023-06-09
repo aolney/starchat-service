@@ -38,7 +38,7 @@ def do_inference(user_message):
 #--------------------------------------------------------------------------------
 # API functions
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 
 app = Flask(__name__)
 
@@ -56,12 +56,26 @@ def get_bot_response(user_message):
 def api_help():
     return 'API for starchat-service, see https://github.com/aolney/starchat-service'
 
+def _build_cors_preflight_response():
+    response = make_response()
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add('Access-Control-Allow-Headers', "*")
+    response.headers.add('Access-Control-Allow-Methods', "*")
+    return response
+
 # get_bot_response(user_message)
-@app.route('/api/getBotResponse', methods=['GET', 'POST'])
+@app.route('/api/getBotResponse', methods=['GET', 'POST', 'OPTIONS'])
 def api_getBotResponse():
+    if request.method == "OPTIONS": # CORS preflight
+        # print("handling preflight")
+        return _build_cors_preflight_response()
     content = request.get_json()
     result = get_bot_response( content['user_message'] )
-    return jsonify(result)
+    return _corsify_actual_response(jsonify( {"bot_response": result} ))
+
+def _corsify_actual_response(response):
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
